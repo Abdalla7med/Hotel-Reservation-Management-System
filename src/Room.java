@@ -1,4 +1,8 @@
 public class Room {
+    public static int counter=1;
+    Room(){
+        counter++;
+    }
    private String No;
    private boolean status;
    private double price;
@@ -35,7 +39,18 @@ public class Room {
         this.services = services;
     }
 
-
+    // content will be as following
+   public String getContent(){
+    StringBuilder content= new StringBuilder();
+        content.append(No).append(" , ");
+        content.append(price).append(" , ");
+        content.append("Services { ");
+        for(Service ser: services){
+            content.append(ser.getContent()).append(" , ");
+        }
+        content.append(" }\n");
+        return content.toString();
+   }
 
 
 }
