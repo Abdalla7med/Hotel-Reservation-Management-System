@@ -45,6 +45,6 @@ abstract class Person {
     public void setAddress(String address) {
         Address = address;
     }
-
+    public abstract String getContent();
 
 }
