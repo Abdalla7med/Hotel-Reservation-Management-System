@@ -1,26 +1,30 @@
-public class Room {
-    public static int counter=1;
-    Room(){
-        counter++;
-    }
-   private String No;
-   private boolean status;
-   private double price;
-   private Service[] services;
-    public String getNo() {
-        return No;
+public abstract class Room {
+    // The fields for room number, price, status, and services
+    private String roomNum;
+    private double price;
+    private boolean available;
+    private boolean wifi;
+    private boolean breakfast;
+    public Room(){
+
     }
 
-    public void setNo(String no) {
-        No = no;
+    // The constructor for the Room class
+    public Room(String roomNum, double price, boolean wifi, boolean breakfast) {
+        this.roomNum = roomNum;
+        this.price = price;
+        this.available = true; // assume all rooms are available by default
+        this.wifi = wifi;
+        this.breakfast = breakfast;
     }
 
-    public boolean isAvaliable() {
-        return status;
+    // The getters and setters for the fields
+    public String getRoomNum() {
+        return roomNum;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setRoomNum(String roomNum) {
+        this.roomNum = roomNum;
     }
 
     public double getPrice() {
@@ -31,26 +35,44 @@ public class Room {
         this.price = price;
     }
 
-    public Service[] getServices() {
-        return services;
+    public boolean isAvailable() {
+        return available;
     }
 
-    public void setServices(Service[] services) {
-        this.services = services;
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
-    // content will be as following
-   public String getContent(){
-    StringBuilder content= new StringBuilder();
-        content.append(No).append(" , ");
+    public boolean hasWifi() {
+        return wifi;
+    }
+
+    public void setWifi(boolean wifi) {
+        this.wifi = wifi;
+    }
+
+    public boolean hasBreakfast() {
+        return breakfast;
+    }
+
+    public void setBreakfast(boolean breakfast) {
+        this.breakfast = breakfast;
+    }
+    public String getContent(){
+        StringBuilder content= new StringBuilder();
+        content.append(roomNum).append(" , ");
         content.append(price).append(" , ");
-        content.append("Services { ");
-        for(Service ser: services){
-            content.append(ser.getContent()).append(" , ");
-        }
-        content.append(" }\n");
+        content.append(available).append(" , ");
+        content.append(wifi?"hasWifi":"noWifi").append(" , ");
+        content.append(breakfast?"hasbreakFast":"noBreakFast").append(" , ");
         return content.toString();
-   }
+    }
+
+
+
+    // The abstract method for getting the specifications of the room
+    public abstract String getSpecifications();
+
 
 
 }
