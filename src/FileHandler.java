@@ -53,39 +53,39 @@ public class FileHandler {
 
     public void updateRecord(String filePath, String old, String updated) throws FileNotFoundException {
         File source = new File(filePath);
-        File temp=new File("D:\\Pl2\\Project\\Hotel Reservation Management System\\TXT files\\Temp.txt");
+        File temp = new File("D:\\Pl2\\Project\\Hotel Reservation Management System\\TXT files\\Temp.txt");
         String line;
         try (BufferedReader reader = new BufferedReader(new FileReader(source));
-             BufferedWriter writer= new BufferedWriter(new FileWriter(temp))){
-               while((line=reader.readLine())!=null){
-                   if(line.equals(old)){
-                       writer.write(updated);
-                       writer.flush();
-                       writer.newLine();
-                   }else{
-                       writer.write(line);
-                       writer.flush();
-                       writer.newLine();
-                   }
-               }
+             BufferedWriter writer = new BufferedWriter(new FileWriter(temp))) {
+            while ((line = reader.readLine()) != null) {
+                if (line.equals(old)) {
+                    writer.write(updated);
+                    writer.flush();
+                    writer.newLine();
+                } else {
+                    writer.write(line);
+                    writer.flush();
+                    writer.newLine();
+                }
+            }
 
-               // need to close first because you can't modify file while it's in use
-               writer.close();
-               reader.close();
+            // need to close first because you can't modify file while it's in use
+            writer.close();
+            reader.close();
 
-               // delete original and rename temp to its name
-               source.delete();
-               temp.renameTo(source);
+            // delete original and rename temp to its name
+            source.delete();
+            temp.renameTo(source);
         } catch (IOException e) {
             System.out.println("can't deal with this file");
         }
     }
 
-    public int nOofLines(String filePath){
-        int size=0;
-        try(BufferedReader reader= new BufferedReader(new FileReader((filePath)))){
+    public int nOofLines(String filePath) {
+        int size = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader((filePath)))) {
             String line;
-            while((line=reader.readLine())!=null){
+            while ((line = reader.readLine()) != null) {
                 size++;
             }
         } catch (IOException e) {
@@ -94,20 +94,41 @@ public class FileHandler {
         return size;
     }
 
-    public boolean Exist(String filepath,String key){
-        boolean found=false;
-        file=new File(filepath);
-        try(BufferedReader reader=new BufferedReader(new FileReader(filepath))){
+    public boolean Exist(String filepath, String key) {
+        boolean found = false;
+        file = new File(filepath);
+        try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
             String line;
-            while((line=reader.readLine())!=null){
-                if(line.contains(key)){
-                    found=true;
+            while ((line = reader.readLine()) != null) {
+                if (line.contains(key)) {
+                    found = true;
                     break;
                 }
             }
-        }catch(IOException ioe){
+        } catch (IOException ioe) {
             System.out.println("file doesn't exist");
         }
         return found;
     }
-}
+
+    public String CertainRecord(String filepath, String key) {
+        String line = null;
+        if (this.Exist(filepath, key)) {
+            file = new File(filepath);
+            try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
+                while ((line = reader.readLine()) != null) {
+                    if (line.contains(key)) {
+                        break;
+                    }
+                }
+            } catch (IOException ioe) {
+                System.out.println("can't deal with this file");
+            }
+        } else {
+            System.out.println("doesn't exist");
+            return "doesn't exist";
+        }
+        return line;
+    }
+
+} // end of class
