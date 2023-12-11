@@ -136,23 +136,14 @@ public class Administrator extends Person{
     // Room Section
     public void addRoom(){
         FileHandler handler= new FileHandler();
-        Room room= new Room();
+        Room room= new RegularRoom();
         Scanner sc= new Scanner(System.in);
         System.out.print("enter room number"); String no=sc.nextLine();
-        room.setNo(no);
+        room.setRoomNum(no);
         System.out.print("enter Room Price "); double price=sc.nextDouble();
         room.setPrice(price);
         System.out.print("enter number of services "); int n=sc.nextInt();
-        Service[]Services=new Service[n];
-        for(int i=0;i<n;i++){
-           System.out.println("enter service name"); String name=sc.nextLine();
-           System.out.println("enter Service Id");  String Id=sc.nextLine();
-           System.out.println("enter Service price"); double Price=sc.nextDouble();
-           Service ser=new Service(name,Id,true,price);
-           handler.writeToFile(ServiceFile,ser.getContent()); // to add this service to Services file
-           Services[i]=ser;
-        }
-        room.setServices(Services);
+
      handler.writeToFile(RoomFile,room.getContent());
     }
     public boolean deleteRoom(){
@@ -200,25 +191,12 @@ public class Administrator extends Person{
             while ((line = reader.readLine()) != null) {
                 if (line.contains(Id)){
                     System.out.println("enter Room new data : ");
-                    Room room= new Room();
+                    Room room= new RegularRoom();
                     System.out.print("enter room number : "); String no=sc.nextLine();
-                    room.setNo(no);
+                    room.setRoomNum(no);
                     System.out.print("enter Room Price : "); double price=sc.nextDouble();
                     room.setPrice(price);
-                    System.out.print("enter number of services : "); int n=sc.nextInt();
-                    Service[]Services=new Service[n];
-                    for(int i=0;i<n;i++){
-                        System.out.println("enter service name"); String name=sc.nextLine();
-                        System.out.println("enter Service Id");  String id=sc.nextLine();
-                        System.out.println("enter Service price"); double Price=sc.nextDouble();
-                        Service ser=new Service(name,id,true,price);
-                        // if Room service doesn't exist in Hotel Services
-                        if(!handler.Exist(ServiceFile,id)) {
-                            handler.writeToFile(ServiceFile, ser.getContent());
-                        }
-                        Services[i]=ser;
-                    }
-                    room.setServices(Services);
+
                 }
             }
         } catch (IOException e) {
