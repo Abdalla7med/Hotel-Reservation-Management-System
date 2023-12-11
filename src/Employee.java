@@ -27,6 +27,6 @@ public class Employee extends Person {
     return content.toString();
     }
     public void setRoomStatus(boolean status,Room target){
-        target.setStatus(status);
+        target.setAvailable(status);
     }
 }
