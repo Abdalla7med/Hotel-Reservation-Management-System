@@ -44,8 +44,7 @@ public class FileHandler {
     public void writeToFile(String filePath, String content) {
         file = new File(filePath);
         try (FileWriter writer = new FileWriter(file, true)) {  //  new FileWriter(File obj, boolean append)
-            writer.write(content);
-            writer.write("\n");
+            writer.write(content+"\n");
         } catch (IOException e) {
             System.out.println("can't deal with this file");
         }
@@ -113,6 +112,11 @@ public class FileHandler {
 
     public String CertainRecord(String filepath, String key) {
         String line = null;
+        file=new File(filepath);
+        if(file.length()==0){
+            System.out.println("no Person in "+filepath);
+            return "false";
+        }
         if (this.Exist(filepath, key)) {
             file = new File(filepath);
             try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
