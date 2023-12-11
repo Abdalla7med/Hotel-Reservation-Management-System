@@ -49,9 +49,10 @@ public class Administrator extends Person{
         System.out.print("enter employee position : ");
         String position=Sc.nextLine();
         employee.setPosition(position);  // this function need Administrator as second parameter
-        this.setEmployeeSalary(employee,1200);
+        this.setEmployeeSalary(employee,3200);
         String content=employee.getContent();
         fileHandler.writeToFile(empFile,content);
+        Sc.nextLine();
         Sc.close();
     }
     public boolean deleteEmployee() {
