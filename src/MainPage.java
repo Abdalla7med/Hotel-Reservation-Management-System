@@ -18,33 +18,100 @@ public class MainPage {
 
         /// login or register
         System.out.println("a.login b.Register");
-        char c=in.nextLine().charAt(0);
-        if(c=='a'||c=='l') {
-            System.out.println("login as : ");
-            System.out.print("a.Admin b.Employee b.Guest");
+        char c = in.nextLine().charAt(0);
+        if (c == 'a' || c == 'l') {
+            System.out.print("a.Admin b.Employee c.Guest     ");
             c = in.nextLine().charAt(0);
-             if (c == 'a' || c == 'A') {
-                while(true) {
+            if (c == 'a' || c == 'A') {
+                while (true) {
                     System.out.println("enter password : ");
                     String p = in.nextLine();
                     // access static member -- make it static to make it available throw System form main
                     if (p.equals(MainPage.pass)) {
-                        System.out.println("Welcome Our Administrator"); break;
+                        System.out.println("Welcome Our Administrator");
+                        break;
                     } else {
                         System.out.println("Incorrect pass");
                     }
                 }
-            }else if (c == 'E' || c == 'b') {
-                new login(empFile);
+                // menu for Admin
+                System.out.println("what you will do this day--------------");
+                int choice;
+                // Declare a variable for the exit condition
+                boolean exit = false;
 
-            }else {
-                new login(guestFile);
+                // Use a do-while loop to repeat the menu until the user chooses to exit
+                do {
+                    // Display the menu options to the user
+                    System.out.println("Menu:");
+                    System.out.println("1) Add employee");
+                    System.out.println("2) Delete employee");
+                    System.out.println("3) Update employee");
+                    System.out.println("4) Display employee");
+                    System.out.println("5) Add room");
+                    System.out.println("6) Delete room");
+                    System.out.println("7) Update room");
+                    System.out.println("8) Display room");
+                    System.out.println("9) Exit");
+                    in.nextLine();
+                    choice = in.nextInt();
+                    // Use a switch statement to execute the corresponding actions based on the user choice
+                    switch (choice) {
+                        case 1:
+                            // Call the method to add an employee
+                            Admin.AddEmployee();
+                            break;
+                        case 2:
+                            // Call the method to delete an employee
+                            Admin.deleteEmployee();
+                            break;
+                        case 3:
+                            // Call the method to update an employee
+                            Admin.updateEmployee();
+                            break;
+//                        case 4:
+//                            // Call the method to display an employee
+//
+//                            break;
+                        case 5:
+                            // Call the method to add a room
+                            Admin.addRoom();
+                            break;
+                        case 6:
+                            // Call the method to delete a room
+                            Admin.deleteRoom();
+
+                            break;
+                        case 7:
+                            // Call the method to update a room
+                            Admin.updateRoom();
+                            break;
+                       /* case 8:
+                            // Call the method to display a room
+
+                            break;*/
+                        case 9:
+                            // Set the exit condition to true
+                            exit = true;
+                            // Print a farewell message
+                            System.out.println("Thank you for using the program. Goodbye.");
+                            break;
+                        default:
+                            // Print an error message
+                            System.out.println("Invalid choice. Please try again.");
+                            break;
+                    }
+                } while (!exit); // Repeat the loop until the exit condition is true
+            } else if (c == 'E' | c == 'b') {
+            new login(empFile);
+            } else {
+              new login(guestFile);
             }
         }else{
             Admin.addGuest();
         }
 
-       
+
     }
 
 
