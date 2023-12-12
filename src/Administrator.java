@@ -11,14 +11,14 @@ public class Administrator extends Person{
 
     public Administrator(){}
     public Administrator(String name){
-        if(name.equals("Admin")||name.equals("admin"))
+        if("Admin".equals(name)||"admin".equals(name))
              this.setName(name);
         else
             this.setName("Admin");
 
     }
     public void SetName(String name){
-        if(name.equals("Admin")||name.equals("admin")) {
+        if("Admin".equals(name)||"admin".equals(name)) {
 
         }else
             System.out.println("please enter correct name");
@@ -31,7 +31,7 @@ public class Administrator extends Person{
 
     // Employee Section
     public void AddEmployee(){
-        FileHandler fileHandler=new FileHandler(empFile);
+        FileHandler fileHandler=new FileHandler(Administrator.empFile);
         Scanner Sc= new Scanner(System.in);
         Employee employee= new Employee();
         System.out.print("enter employee name: ");
@@ -51,17 +51,16 @@ public class Administrator extends Person{
         employee.setPosition(position);  // this function need Administrator as second parameter
         this.setEmployeeSalary(employee,3200);
         String content=employee.getContent();
-        fileHandler.writeToFile(empFile,content);
-        Sc.nextLine();
-        Sc.close();
+        fileHandler.writeToFile(Administrator.empFile,content);
     }
+
     public boolean deleteEmployee() {
         String ssn;
         System.out.print("enter employee ssn : ");
         Scanner sc=new Scanner(System.in);
         ssn=sc.nextLine();
-        File sfile=new File(empFile);
-        File temp = new File(tempFile);
+        File sfile=new File(Administrator.empFile);
+        File temp = new File(Administrator.tempFile);
         boolean founded=false;
         // add this to try to auto close it after end try block
         try (
@@ -95,11 +94,11 @@ public class Administrator extends Person{
         FileHandler fileHandler = new FileHandler();
         System.out.print("enter employee ssn :");
         String ssn = sc.nextLine();
+        String line;
+        String[]data;
+        String newLine = null;
         boolean founded=false;
-        try (BufferedReader reader = new BufferedReader(new FileReader(empFile))) {
-            String line;
-            String[]data;
-            String newLine = null;
+        try (BufferedReader reader = new BufferedReader(new FileReader(Administrator.empFile))) {
             while ((line = reader.readLine()) != null) {
                 data=line.split(",");
                 if (data[0].trim().equals(ssn)) {
@@ -116,16 +115,39 @@ public class Administrator extends Person{
                     System.out.print("enter employee new position : ");
                     String position = sc.nextLine();
                     employee.setPosition(position);
-                    System.out.println("enter employee new salary");
+                    System.out.print("enter employee new salary");
                     double salary = sc.nextDouble();
                     this.setEmployeeSalary(employee, salary);
                     newLine = employee.getContent();
-                    fileHandler.updateRecord(empFile, line, newLine);
+                    fileHandler.updateRecord(Administrator.empFile, line, newLine);
                     founded = true;
-                    sc.close();
                     break;
                 }
             }
+        } catch (IOException e) {
+            System.out.println("can't deal with this file");
+        }
+        File source=new File(empFile);
+        File temp=new File(tempFile);
+        try (BufferedReader reader = new BufferedReader(new FileReader(source));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(temp))) {
+            while ((line = reader.readLine()) != null) {
+                if (line.equals(line)) {
+                    writer.write(newLine);
+                    writer.flush();
+                    writer.newLine();
+                    continue;
+                }
+                writer.write(line);
+                writer.flush();
+                writer.newLine();
+            }
+            // need to close first because you can't modify file while it's in use
+            writer.close();
+            reader.close();
+            // delete original and rename temp to its name
+            source.delete();
+            temp.renameTo(source);
         } catch (IOException e) {
             System.out.println("can't deal with this file");
         }
@@ -138,22 +160,33 @@ public class Administrator extends Person{
     public void addRoom(){
         FileHandler handler= new FileHandler();
         Room room= new RegularRoom();
-        Scanner sc= new Scanner(System.in);
-        System.out.print("enter room number"); String no=sc.nextLine();
-        room.setRoomNum(no);
-        System.out.print("enter Room Price "); double price=sc.nextDouble();
-        room.setPrice(price);
-        System.out.print("enter number of services "); int n=sc.nextInt();
+        try {
+            Scanner sc = new Scanner(System.in);
+            System.out.print("enter room number");
+            String no = sc.nextLine();
+            room.setRoomNum(no);
+            System.out.print("enter Room Price ");
+            double price = sc.nextDouble();
+            room.setPrice(price);
+            System.out.print("has wifi?  "); boolean wifi=sc.nextBoolean();
+            room.setWifi(wifi);
+            System.out.println("has breakfast?  "); boolean breakfast=sc.nextBoolean();
+            room.setBreakfast(breakfast);
 
-     handler.writeToFile(RoomFile,room.getContent());
+
+            // this include all IntputMismatch , NosuchElement , and IllegalStata Exceptions
+        }catch(Exception e1){
+            System.out.println("please enter data in correct form");
+        }
+     handler.writeToFile(Administrator.RoomFile,room.getContent());
     }
     public boolean deleteRoom(){
         String Id;
         System.out.print("enter Room Id : ");
         Scanner sc=new Scanner(System.in);
         Id=sc.nextLine();
-        File sfile=new File(ServiceFile);
-        File temp = new File(tempFile);
+        File sfile=new File(Administrator.ServiceFile);
+        File temp = new File(Administrator.tempFile);
         boolean founded=false;
         // add this to try to auto close it after end try block
         try (   BufferedReader reader = new BufferedReader(new FileReader(sfile));
@@ -186,7 +219,7 @@ public class Administrator extends Person{
         System.out.print("enter Room Id :");
         String Id = sc.nextLine();
         boolean founded=false;
-        try (BufferedReader reader = new BufferedReader(new FileReader(empFile))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(Administrator.empFile))) {
             String line;
             String newLine = null;
             while ((line = reader.readLine()) != null) {
@@ -210,7 +243,7 @@ public class Administrator extends Person{
 
     // Customer (Guest module)
     public void addGuest(){
-        FileHandler fileHandler=new FileHandler(empFile);
+        FileHandler fileHandler=new FileHandler(Administrator.empFile);
         Scanner Sc= new Scanner(System.in);
         Guest guest= new Guest();
         System.out.print("enter Guest name: ");
@@ -225,16 +258,17 @@ public class Administrator extends Person{
         System.out.print("enter Guest email : ");
         String email=Sc.nextLine();
         guest.setEmail(email);
-        fileHandler.writeToFile(guestFile,guest.getContent());
+        fileHandler.writeToFile(Administrator.guestFile,guest.getContent());
         Sc.close();
     }
+
     public boolean deleteGuest(){
         String ssn;
         System.out.print("enter Guest ssn : ");
         Scanner sc=new Scanner(System.in);
         ssn=sc.nextLine();
-        File sfile=new File(guestFile);
-        File temp = new File(tempFile);
+        File sfile=new File(Administrator.guestFile);
+        File temp = new File(Administrator.tempFile);
         boolean founded=false;
         // add this to try to auto close it after end try block
         try (   BufferedReader reader = new BufferedReader(new FileReader(sfile));
@@ -268,7 +302,7 @@ public class Administrator extends Person{
         System.out.print("enter Guest ssn :");
         String ssn = sc.nextLine();
         boolean founded=false;
-        try (BufferedReader reader = new BufferedReader(new FileReader(guestFile))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(Administrator.guestFile))) {
             String line;
             String newLine;
             while ((line = reader.readLine()) != null) {
@@ -288,7 +322,7 @@ public class Administrator extends Person{
                     String email=Sc.nextLine();
                     guest.setEmail(email);
                     newLine=guest.getContent();
-                    fileHandler.updateRecord(empFile, line, newLine);
+                    fileHandler.updateRecord(Administrator.empFile, line, newLine);
                     founded = true;
                     sc.close();
                     break;
@@ -299,6 +333,7 @@ public class Administrator extends Person{
         }
         return founded;
     }
+
     private void setEmployeeSalary(Employee emp,double salary){
         emp.setSalary(salary);
     }
