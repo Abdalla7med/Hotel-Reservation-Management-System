@@ -9,8 +9,7 @@ public class Guest extends Person{
         content.append(getSSnn()).append(" , ");
         content.append(getName()).append(" , ");
         content.append(getEmail()).append(" , ");
-        content.append(getPhone()).append(" , ");
-        content.append(getAddress()).append(" , ");
+        content.append(getAddress());
         return content.toString();
     }
 }
