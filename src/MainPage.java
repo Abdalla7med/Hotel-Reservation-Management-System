@@ -20,7 +20,7 @@ public class MainPage {
         System.out.println("a.login b.Register");
         char c = in.nextLine().charAt(0);
         if (c == 'a' || c == 'l') {
-            System.out.print("a.Admin b.Employee c.Guest     ");
+            System.out.print("a.Admin b.Employee ");
             c = in.nextLine().charAt(0);
             if (c == 'a' || c == 'A') {
                 while (true) {
@@ -39,7 +39,6 @@ public class MainPage {
                 int choice;
                 // Declare a variable for the exit condition
                 boolean exit = false;
-
                 // Use a do-while loop to repeat the menu until the user chooses to exit
                 do {
                     // Display the menu options to the user
@@ -47,13 +46,10 @@ public class MainPage {
                     System.out.println("1) Add employee");
                     System.out.println("2) Delete employee");
                     System.out.println("3) Update employee");
-                    System.out.println("4) Display employee");
-                    System.out.println("5) Add room");
+                    System.out.println("4) Add room");
                     System.out.println("6) Delete room");
                     System.out.println("7) Update room");
-                    System.out.println("8) Display room");
-                    System.out.println("9) Exit");
-                    in.nextLine();
+                    System.out.print("8) Exit");
                     choice = in.nextInt();
                     // Use a switch statement to execute the corresponding actions based on the user choice
                     switch (choice) {
@@ -69,11 +65,7 @@ public class MainPage {
                             // Call the method to update an employee
                             Admin.updateEmployee();
                             break;
-//                        case 4:
-//                            // Call the method to display an employee
-//
-//                            break;
-                        case 5:
+                        case 4:
                             // Call the method to add a room
                             Admin.addRoom();
                             break;
@@ -86,11 +78,7 @@ public class MainPage {
                             // Call the method to update a room
                             Admin.updateRoom();
                             break;
-                       /* case 8:
-                            // Call the method to display a room
-
-                            break;*/
-                        case 9:
+                        case 8:
                             // Set the exit condition to true
                             exit = true;
                             // Print a farewell message
@@ -102,18 +90,14 @@ public class MainPage {
                             break;
                     }
                 } while (!exit); // Repeat the loop until the exit condition is true
-            } else if (c == 'E' | c == 'b') {
-            new login(empFile);
-            } else {
-              new login(guestFile);
+            }else {
+              new login(empFile);
             }
         }else{
+            // Register for Guest only
             Admin.addGuest();
+
         }
 
-
     }
-
-
-    // end Room Management
 }
