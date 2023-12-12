@@ -20,10 +20,9 @@ public class Employee extends Person {
        content.append(getSSnn()).append(" , ");
        content.append(getName()).append(" , ");
        content.append(getEmail()).append(" , ");
-       content.append(getPhone()).append(" , ");
        content.append(getAddress()).append(" , ");
        content.append(this.position).append(" , ");
-       content.append(this.salary).append(" , ");
+       content.append(this.salary);
     return content.toString();
     }
     public void setRoomStatus(boolean status,Room target){
