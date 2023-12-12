@@ -58,19 +58,18 @@ public abstract class Room {
     public void setBreakfast(boolean breakfast) {
         this.breakfast = breakfast;
     }
+
     public String getContent(){
         StringBuilder content= new StringBuilder();
         content.append(roomNum).append(" , ");
         content.append(price).append(" , ");
         content.append(available).append(" , ");
         content.append(wifi?"hasWifi":"noWifi").append(" , ");
-        content.append(breakfast?"hasbreakFast":"noBreakFast").append(" , ");
+        content.append(breakfast?"Has BreakFast":"noBreakFast").append(" , ");
         return content.toString();
     }
 
-
-
-    // The abstract method for getting the specifications of the room
+    // The abstract method for getting the specifications of the room (to achieve polymorphism (run-time))
     public abstract String getSpecifications();
 
 
