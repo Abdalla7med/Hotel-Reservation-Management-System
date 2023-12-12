@@ -49,8 +49,7 @@ public class FileHandler {
             System.out.println("can't deal with this file");
         }
     }
-
-    public void updateRecord(String filePath, String old, String updated) throws FileNotFoundException {
+    public void updateRecord(String filePath, String old, String updated) {
         File source = new File(filePath);
         File temp = new File("D:\\Pl2\\Project\\Hotel Reservation Management System\\TXT files\\Temp.txt");
         String line;
@@ -61,17 +60,15 @@ public class FileHandler {
                     writer.write(updated);
                     writer.flush();
                     writer.newLine();
-                } else {
-                    writer.write(line);
-                    writer.flush();
-                    writer.newLine();
+                    continue;
                 }
+                writer.write(line);
+                writer.flush();
+                writer.newLine();
             }
-
             // need to close first because you can't modify file while it's in use
             writer.close();
             reader.close();
-
             // delete original and rename temp to its name
             source.delete();
             temp.renameTo(source);
@@ -92,7 +89,7 @@ public class FileHandler {
         }
         return size;
     }
-
+   // search if exist or not
     public boolean Exist(String filepath, String key) {
         boolean found = false;
         file = new File(filepath);
@@ -110,6 +107,7 @@ public class FileHandler {
         return found;
     }
 
+    // get certain record
     public String CertainRecord(String filepath, String key) {
         String line = null;
         file=new File(filepath);
