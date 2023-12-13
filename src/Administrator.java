@@ -37,9 +37,6 @@ public class Administrator extends Person{
         System.out.print("enter employee name: ");
         String name=Sc.nextLine();
         employee.setName(name);
-        System.out.print("enter employee ssn : ");
-        String ssn=Sc.nextLine();
-        employee.setSSnn(ssn);
         System.out.print("enter employee address : ");
         String address=Sc.nextLine();
         employee.setAddress(address);
@@ -92,7 +89,7 @@ public class Administrator extends Person{
     public boolean updateEmployee() {
         Scanner sc = new Scanner(System.in);
         FileHandler fileHandler = new FileHandler();
-        System.out.print("enter employee ssn :");
+        System.out.print("enter employee ssn : ");
         String ssn = sc.nextLine();
         String line;
         String[]data;
@@ -105,7 +102,6 @@ public class Administrator extends Person{
                     Employee employee = new Employee();
                     // these data isn't expected to be updated employee won't change his name (:
                     employee.setName(data[1]);
-                    employee.setSSnn(data[0]);
                     System.out.print("enter employee new address : ");
                     String address = sc.nextLine();
                     employee.setAddress(address);
@@ -213,6 +209,7 @@ public class Administrator extends Person{
         }
         return founded;
     }
+
     public boolean updateRoom(){
         Scanner sc = new Scanner(System.in);
         FileHandler handler = new FileHandler();
@@ -249,9 +246,6 @@ public class Administrator extends Person{
         System.out.print("enter Guest name: ");
         String name=Sc.nextLine();
         guest.setName(name);
-        System.out.print("enter Guest ssn : ");
-        String ssn=Sc.nextLine();
-        guest.setSSnn(ssn);
         System.out.print("enter Guest address : ");
         String address=Sc.nextLine();
         guest.setAddress(address);
@@ -312,9 +306,6 @@ public class Administrator extends Person{
                     System.out.print("enter Guest name: ");
                     String name=Sc.nextLine();
                     guest.setName(name);
-                    System.out.print("enter Guest ssn : ");
-                    ssn=Sc.nextLine();
-                    guest.setSSnn(ssn);
                     System.out.print("enter Guest address : ");
                     String address=Sc.nextLine();
                     guest.setAddress(address);
