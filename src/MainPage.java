@@ -1,6 +1,4 @@
-import java.util.List;
 import java.util.Scanner;
-
 public class MainPage {
     // System files
     public static final String empFile="D:\\Pl2\\Project\\Hotel Reservation Management System\\TXT files\\Employees.txt";
