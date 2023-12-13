@@ -8,8 +8,8 @@ public class login {
          System.out.print("enter Id: "); String id=in.nextLine();
          if(handler.Exist(file,id)) {
              String line = handler.CertainRecord(file, id);
-             if (line.contains(",")) {
-                 String[] data = line.split(",");
+             String[] data = line.split(",");
+             if (data[0].trim().equals(id)) {
                  System.out.println("Welcome " + data[1].trim());
              }
          }else {
