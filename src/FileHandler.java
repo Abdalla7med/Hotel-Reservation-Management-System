@@ -15,6 +15,10 @@ public class FileHandler {
     public void setFile(String filepath) {
         file = new File(filepath);
     }
+    public void setFile(File f) {
+        file = f;
+    }
+
 
     // Method to read one line from a file content from a file
     public String readFromFile(String filePath, int Lindex) {
@@ -49,6 +53,14 @@ public class FileHandler {
             System.out.println("can't deal with this file");
         }
     }
+    public void writeToFil(File f, String content) {
+        file = f;
+        try (FileWriter writer = new FileWriter(file, true)) {  //  new FileWriter(File obj, boolean append)
+            writer.write(content+"\n");
+        } catch (IOException e) {
+            System.out.println("can't deal with this file");
+        }
+    }
     public void updateRecord(String filePath, String old, String updated) {
         File source = new File(filePath);
         File temp = new File("D:\\Pl2\\Project\\Hotel Reservation Management System\\TXT files\\Temp.txt");
@@ -77,7 +89,35 @@ public class FileHandler {
         }
     }
 
-    public int nOofLines(String filePath) {
+    public void updateRecord(File f, String old, String updated) {
+        File source = f;
+        File temp = new File("D:\\Pl2\\Project\\Hotel Reservation Management System\\TXT files\\Temp.txt");
+        String line;
+        try (BufferedReader reader = new BufferedReader(new FileReader(source));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(temp))) {
+            while ((line = reader.readLine()) != null) {
+                if (line.equals(old)) {
+                    writer.write(updated);
+                    writer.flush();
+                    writer.newLine();
+                    continue;
+                }
+                writer.write(line);
+                writer.flush();
+                writer.newLine();
+            }
+            // need to close first because you can't modify file while it's in use
+            writer.close();
+            reader.close();
+            // delete original and rename temp to its name
+            source.delete();
+            temp.renameTo(source);
+        } catch (IOException e) {
+            System.out.println("can't deal with this file");
+        }
+    }
+
+    public static  int nOofLines(String filePath) {
         int size = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader((filePath)))) {
             String line;
@@ -89,6 +129,20 @@ public class FileHandler {
         }
         return size;
     }
+
+    public static int nOofLines(File f) {
+        int size = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader((f)))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                size++;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return size;
+    }
+
    // search if exist or not
     public boolean Exist(String filepath, String key) {
         boolean found = false;
@@ -106,18 +160,54 @@ public class FileHandler {
         }
         return found;
     }
+    public boolean Exist(File f, String key) {
+        boolean found = false;
+        file = f;
+        try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.contains(key)) {
+                    found = true;
+                    break;
+                }
+            }
+        }catch (IOException ioe) {
+            System.out.println("file doesn't exist");
+        }
+        return found;
+    }
 
     // get certain record
     public String CertainRecord(String filepath, String key) {
         String line = null;
         file=new File(filepath);
+        if (this.Exist(filepath, key)) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
+                while ((line = reader.readLine()) != null) {
+                    if (line.contains(key)) {
+                        break;
+                    }
+                }
+            } catch (IOException ioe) {
+                System.out.println("can't deal with this file");
+            }
+        } else {
+            System.out.println("doesn't exist");
+            return "doesn't exist";
+        }
+        return line;
+    }
+    // overloaded
+    public String CertainRecord(File f, String key) {
+        String line = null;
+        file =f;
         if(file.length()==0){
-            System.out.println("no Person in "+filepath);
+            System.out.println("no Person in "+f.getName());
             return "false";
         }
-        if (this.Exist(filepath, key)) {
-            file = new File(filepath);
-            try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
+        if (this.Exist(f, key)) {
+            file = f;
+            try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
                 while ((line = reader.readLine()) != null) {
                     if (line.contains(key)) {
                         break;
