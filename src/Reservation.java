@@ -40,6 +40,7 @@ public class Reservation {
     }
 
     private boolean status; // true indicate that reservation still , false mean that Guest checkout either in date or before end his duration
+
     public Reservation(){
       Scanner in=new Scanner(System.in);
       System.out.println("--------------------Reservation Page--------------------");
@@ -50,7 +51,11 @@ public class Reservation {
       double price= 100+ (wifi?10:0 )+ (breakfast?15:0);
       RegularRoom room=new RegularRoom(id,price,wifi,breakfast);
       System.out.print("enter checkout date : "); String checkout=in.nextLine();
+      this.check_in=LocalDateTime.now();
       this.setCheck_out(LocalDateTime.parse(checkout,formatter));
+    }
+    public void makeReservation(){
+
     }
 
     public LocalDateTime getCheck_in() {
@@ -66,6 +71,9 @@ public class Reservation {
     }
     public boolean validateCheckIn(){
         return check_in==null;
+    }
+    public void ValidateCheckout(){
+
     }
     public void validateCheckOut(){
         if(check_out==null){
