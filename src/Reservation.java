@@ -49,7 +49,7 @@ public class Reservation {
       System.out.print("need Wifi  ?  "); boolean wifi=in.nextBoolean(); System.out.print("\n");
       System.out.print("need breakfast ?  "); boolean breakfast=in.nextBoolean(); System.out.print("\n");
       double price= 100+ (wifi?10:0 )+ (breakfast?15:0);
-      RegularRoom room=new RegularRoom(id,price,wifi,breakfast);
+      RegularRoom room=new RegularRoom(price,wifi,breakfast);
       System.out.print("enter checkout date : "); String checkout=in.nextLine();
       this.check_in=LocalDateTime.now();
       this.setCheck_out(LocalDateTime.parse(checkout,formatter));
