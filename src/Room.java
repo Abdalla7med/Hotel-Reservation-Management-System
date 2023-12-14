@@ -1,4 +1,7 @@
+import java.util.concurrent.atomic.AtomicInteger;
+
 public abstract class Room {
+
     // The fields for room number, price, status, and services
     private String roomNum;
     private double price;
@@ -6,12 +9,12 @@ public abstract class Room {
     private boolean wifi;
     private boolean breakfast;
     public Room(){
-
+        this.available=true; // true mean that this room
     }
 
     // The constructor for the Room class
     public Room(String roomNum, double price, boolean wifi, boolean breakfast) {
-        this.roomNum = roomNum;
+        this.roomNum=roomNum;
         this.price = price;
         this.available = true; // assume all rooms are available by default
         this.wifi = wifi;
@@ -25,6 +28,9 @@ public abstract class Room {
 
     public void setRoomNum(String roomNum) {
         this.roomNum = roomNum;
+    }
+    public void setRoomNum(int roomnum){
+        this.roomNum=String.valueOf(roomnum);
     }
 
     public double getPrice() {
@@ -63,7 +69,7 @@ public abstract class Room {
         StringBuilder content= new StringBuilder();
         content.append(roomNum).append(" , ");
         content.append(price).append(" , ");
-        content.append(available).append(" , ");
+        content.append(available?"Available":"reserved").append(" , ");
         content.append(wifi?"hasWifi":"noWifi").append(" , ");
         content.append(breakfast?"Has BreakFast":"noBreakFast").append(" , ");
         return content.toString();
