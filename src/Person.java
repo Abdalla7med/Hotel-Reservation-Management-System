@@ -2,7 +2,25 @@ abstract class Person {
     private String name;
     private String email;
     private String Address;
+    private String id;
+    public Person(){
 
+    }
+    public Person(String id,String name,String email,String Address){
+        this.setId(id);
+        this.setName(name);
+        this.setEmail(email);
+        this.setAddress(Address);
+    }
+    public void setId(int id){
+        this.id=String.valueOf(id);
+    }
+    public void setId(String id){
+        this.id=id;
+    }
+    public String getId(){
+        return this.id;
+    }
     public String getName() {
         return name;
     }
