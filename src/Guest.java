@@ -1,17 +1,18 @@
 public class Guest extends Person{
-    public static int counter =1;
-    private static int  ssn=12434001;
+
     public Guest(){
-        ssn++;
-        counter++;
+
+        super.setId(IdGenerator.getNextId(MainPage.guestFile));
     }
-    public int getSSN(){
-        return this.ssn;
+    public Guest(String id,String name,String email,String Address){
+
+        super(String.valueOf(IdGenerator.getNextId(MainPage.guestFile)),name,email,Address);
     }
+
     @Override
     public String getContent(){
         StringBuilder content= new StringBuilder();
-        content.append(getSSN()).append(" , ");
+        content.append(getId()).append(" , ");
         content.append(getName()).append(" , ");
         content.append(getEmail()).append(" , ");
         content.append(getAddress());
