@@ -45,9 +45,11 @@ public class MainPage {
                     System.out.println("2) Delete employee");
                     System.out.println("3) Update employee");
                     System.out.println("4) Add room");
-                    System.out.println("6) Delete room");
-                    System.out.println("7) Update room");
-                    System.out.print("8) Exit");
+                    System.out.println("5) Delete room");
+                    System.out.println("6) Update room");
+                    System.out.println("7) delete guest");
+                    System.out.println("8) Update guest");
+                    System.out.print("9) Exit");
                     choice = in.nextInt();
                     // Use a switch statement to execute the corresponding actions based on the user choice
                     switch (choice) {
@@ -67,16 +69,21 @@ public class MainPage {
                             // Call the method to add a room
                             Admin.addRoom();
                             break;
-                        case 6:
+                        case 5:
                             // Call the method to delete a room
                             Admin.deleteRoom();
 
                             break;
-                        case 7:
+                        case 6:
                             // Call the method to update a room
                             Admin.updateRoom();
                             break;
+                        case 7:
+                            Admin.deleteGuest();
+                            break;
                         case 8:
+                            Admin.updateGuest();
+                        case 9:
                             // Set the exit condition to true
                             exit = true;
                             // Print a farewell message
