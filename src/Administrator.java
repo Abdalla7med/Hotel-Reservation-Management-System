@@ -155,12 +155,9 @@ public class Administrator extends Person{
     // Room Section
     public void addRoom(){
         FileHandler handler= new FileHandler();
-        Room room= new RegularRoom();
+        RegularRoom room= new RegularRoom();
         try {
             Scanner sc = new Scanner(System.in);
-            System.out.print("enter room number");
-            String no = sc.nextLine();
-            room.setRoomNum(no);
             System.out.print("enter Room Price ");
             double price = sc.nextDouble();
             room.setPrice(price);
@@ -168,21 +165,19 @@ public class Administrator extends Person{
             room.setWifi(wifi);
             System.out.println("has breakfast?  "); boolean breakfast=sc.nextBoolean();
             room.setBreakfast(breakfast);
-
-
             // this include all IntputMismatch , NosuchElement , and IllegalStata Exceptions
         }catch(Exception e1){
             System.out.println("please enter data in correct form");
         }
-     handler.writeToFile(Administrator.RoomFile,room.getContent());
+     handler.writeToFile(RoomFile,room.getContent());
     }
     public boolean deleteRoom(){
         String Id;
         System.out.print("enter Room Id : ");
         Scanner sc=new Scanner(System.in);
         Id=sc.nextLine();
-        File sfile=new File(Administrator.ServiceFile);
-        File temp = new File(Administrator.tempFile);
+        File sfile=new File(RoomFile);
+        File temp = new File(tempFile);
         boolean founded=false;
         // add this to try to auto close it after end try block
         try (   BufferedReader reader = new BufferedReader(new FileReader(sfile));
@@ -212,26 +207,50 @@ public class Administrator extends Person{
 
     public boolean updateRoom(){
         Scanner sc = new Scanner(System.in);
-        FileHandler handler = new FileHandler();
-        System.out.print("enter Room Id :");
+        System.out.print("enter Room Number :");
         String Id = sc.nextLine();
+        String line;
+        String newLine = null;
         boolean founded=false;
-        try (BufferedReader reader = new BufferedReader(new FileReader(Administrator.empFile))) {
-            String line;
-            String newLine = null;
+        try (BufferedReader reader = new BufferedReader(new FileReader(RoomFile))) {
             while ((line = reader.readLine()) != null) {
                 if (line.contains(Id)){
-                    System.out.println("enter Room new data : ");
+                    String[]data=line.split(",");
                     Room room= new RegularRoom();
-                    System.out.print("enter room number : "); String no=sc.nextLine();
-                    room.setRoomNum(no);
+                    room.setRoomNum(data[0]);
                     System.out.print("enter Room Price : "); double price=sc.nextDouble();
                     room.setPrice(price);
-
+                    System.out.println("has wifi : "); boolean wifi=sc.nextBoolean(); room.setWifi(wifi);
+                    System.out.println("has breakfast : "); boolean breakfast=sc.nextBoolean(); room.setBreakfast(breakfast);
+                    room.setAvailable(true);  // room is available while no reservation is done
+                   newLine=room.getContent();
                 }
             }
         } catch (IOException e) {
             System.out.println("can't deal with this file");
+        }
+        File source=new File(RoomFile);
+        File temp=new File(tempFile);
+        try (BufferedReader reader = new BufferedReader(new FileReader(source));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(temp))) {
+            while ((line = reader.readLine()) != null) {
+                if (line.equals(line)) {
+                    writer.write(newLine);
+                    writer.flush();
+                    writer.newLine();
+                    continue;
+                }
+                writer.write(line);
+                writer.flush();
+                writer.newLine();
+            }
+            writer.close();
+            reader.close();
+            // change files
+            source.delete();
+            temp.renameTo(source);
+        }catch(IOException ioe){
+                System.out.println("can't deal with this file ");
         }
         return founded;
     }
@@ -252,7 +271,7 @@ public class Administrator extends Person{
         System.out.print("enter Guest email : ");
         String email=Sc.nextLine();
         guest.setEmail(email);
-        fileHandler.writeToFile(Administrator.guestFile,guest.getContent());
+        fileHandler.writeToFile(guestFile,guest.getContent());
         Sc.close();
     }
 
