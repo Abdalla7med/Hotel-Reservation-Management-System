@@ -222,5 +222,31 @@ public class FileHandler {
         }
         return line;
     }
+    // the Intuition behind this solution is to keep last line in prev because after loop line will be null
+
+    public static String getLast(String file){
+        String line=null,prev=null;
+        try(BufferedReader reader=new BufferedReader(new FileReader(file))){
+            while((line=reader.readLine())!=null){
+                prev=line;
+            }
+        }catch(IOException e){
+            System.out.println("can't deal with this file");
+        }
+        return prev;
+    }
+    // Overloaded method
+    public static String getLast(File file){
+        String line=null,prev=null;
+        try(BufferedReader reader=new BufferedReader(new FileReader(file))){
+            while((line=reader.readLine())!=null){
+                prev=line;
+            }
+        }catch(IOException e){
+            System.out.println("can't deal with this file");
+        }
+        return prev;
+    }
+
 
 } // end of class
