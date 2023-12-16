@@ -68,10 +68,11 @@ public abstract class Room {
     public String getContent(){
         StringBuilder content= new StringBuilder();
         content.append(roomNum).append(" , ");
+        content.append(String.valueOf(this.getClass())).append(" , ");
         content.append(price).append(" , ");
-        content.append(available?"Available":"reserved").append(" , ");
-        content.append(wifi?"hasWifi":"noWifi").append(" , ");
-        content.append(breakfast?"Has BreakFast":"noBreakFast").append(" , ");
+        content.append(available ? "Available" : "reserved").append(" , ");
+        content.append(wifi ? "hasWifi" : "noWifi").append(" , ");
+        content.append(breakfast ? "Has BreakFast" : "noBreakFast").append(" , ");
         return content.toString();
     }
 
