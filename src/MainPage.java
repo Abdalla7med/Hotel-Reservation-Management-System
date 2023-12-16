@@ -10,7 +10,7 @@ public class MainPage {
     private final static Administrator Admin=new Administrator("Admin");
     //breaking encapsulation to use it in authorization in login and other related methods
     public final static String pass="admin101";
-    private static Scanner in=new Scanner(System.in);
+    private static final Scanner in=new Scanner(System.in);
 
     public static void main(String[] args) {
 
@@ -55,34 +55,58 @@ public class MainPage {
                     switch (choice) {
                         case 1:
                             // Call the method to add an employee
-                            Admin.AddEmployee();
+                            Administrator.AddEmployee();
                             break;
                         case 2:
                             // Call the method to delete an employee
-                            Admin.deleteEmployee();
+                            if(Administrator.deleteEmployee()){
+                                System.out.println("deleted successfully");
+                            }else{
+                                System.out.println("Employee doesn't exist");
+                            }
                             break;
                         case 3:
                             // Call the method to update an employee
-                            Admin.updateEmployee();
+                            if(Administrator.updateEmployee()){
+                                System.out.println("updated successfully");
+                            }else{
+                                System.out.println("Employee doesn't exist");
+                            }
                             break;
                         case 4:
                             // Call the method to add a room
-                            Admin.addRoom();
+                            Administrator.addRoom();
                             break;
                         case 5:
                             // Call the method to delete a room
-                            Admin.deleteRoom();
-
+                            if(Administrator.deleteRoom()){
+                                System.out.println("Room deleted successfully");
+                            }else{
+                                System.out.println("Room doesn't exist");
+                            }
                             break;
                         case 6:
                             // Call the method to update a room
-                            Admin.updateRoom();
+                            if(Administrator.updateRoom()){
+                                System.out.println("Room updated successfully");
+                            }else{
+                                System.out.println("Room doesn't exist");
+                            }
                             break;
                         case 7:
-                            Admin.deleteGuest();
+                            if(Administrator.deleteGuest()){
+                                System.out.println("deleted successfully");
+                            }else{
+                                System.out.println("Guest doesn't exist");
+                            }
                             break;
                         case 8:
-                            Admin.updateGuest();
+                            if(Administrator.updateGuest()){
+                                System.out.println("deleted successfully");
+                            }else{
+                                System.out.println("Guest doesn't exist");
+                            }
+                            break;
                         case 9:
                             // Set the exit condition to true
                             exit = true;
